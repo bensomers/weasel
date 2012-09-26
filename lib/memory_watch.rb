@@ -25,7 +25,7 @@ class MemoryWatch
   def _trigger_callback
     self.high_water_pids.each do |pid,over_marks|
       if over_marks.size >= self.num_over_marks
-        puts "[#{Time.now}] #{pid} #{self.callback_message}"
+        puts "[#{Time.now}] PID #{pid} #{over_marks[-1] / 1024}MB #{self.callback_message}"
         self.callback.call(pid)
       end
     end
@@ -39,7 +39,7 @@ class MemoryWatch
     _run.each { |pid|
       memory_usage = %x{ps -o rss= -p #{pid}}.to_i # KB
       if memory_usage > self.high_water_mb * 1024 # 750MB
-        puts "WARNING - Process #{pid} hit high water mark at #{memory_usage / 1024}MB"
+        puts "WARNING - Process #{pid} hit high water mark"
         self.high_water_pids[pid] ||= []
         self.high_water_pids[pid] << memory_usage
       end

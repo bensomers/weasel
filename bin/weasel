@@ -10,7 +10,7 @@ OptionParser.new do |opts|
      exit
    end
 
-  opts.on("--callback rubycode",String, "ruby code to exectute - has \#{pid} avalible") do |v|
+  opts.on("--callback rubycode",String, "ruby code to execute - has \#{pid} avalible") do |v|
     options[:callback] = lambda {|pid|  # may be evil
                           eval(v)
                         }
